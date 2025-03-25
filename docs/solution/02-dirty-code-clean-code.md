@@ -6,4 +6,5 @@
 
 ## Qu'est-ce que du code propre ?
 
+- Respecter le concept SOLID
 - 

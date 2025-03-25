@@ -1,23 +1,26 @@
 package money_problem.domain;
 
-import org.junit.jupiter.api.Test;
-
-import static money_problem.domain.Currency.*;
+import static money_problem.domain.Currency.EUR;
+import static money_problem.domain.Currency.KRW;
+import static money_problem.domain.Currency.USD;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import org.junit.jupiter.api.Test;
 
 class BankTest {
 
     @Test
-    void convert_eur_to_usd_returns_double() throws MissingExchangeRateException {
+    void convert_eur_to_usd_returns_double() throws MissingExchangeRateException, SameCurrencyException {
         assertThat(Bank.withExchangeRate(EUR, USD, 1.2).convert(10, EUR, USD))
                 .isEqualTo(12);
     }
 
     @Test
-    void convert_eur_to_eur_returns_same_value() throws MissingExchangeRateException {
-        assertThat(Bank.withExchangeRate(EUR, USD, 1.2).convert(10, EUR, EUR))
-                .isEqualTo(10);
+    void convert_eur_to_eur_returns_same_value() throws MissingExchangeRateException, SameCurrencyException {
+        assertThatThrownBy(() -> Bank.withExchangeRate(EUR, USD, 1.2).convert(10, EUR, EUR))
+                .isInstanceOf(SameCurrencyException.class)
+                .hasMessage("Impossible de convertir deux monnaies identiques EUR->EUR");
     }
 
     @Test
@@ -28,7 +31,7 @@ class BankTest {
     }
 
     @Test
-    void convert_with_different_exchange_rates_returns_different_floats() throws MissingExchangeRateException {
+    void convert_with_different_exchange_rates_returns_different_floats() throws MissingExchangeRateException, SameCurrencyException {
         assertThat(Bank.withExchangeRate(EUR, USD, 1.2).convert(10, EUR, USD))
                 .isEqualTo(12);
 

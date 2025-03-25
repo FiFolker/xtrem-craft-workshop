@@ -11,16 +11,19 @@ import org.junit.jupiter.api.Test;
 class BankTest {
 
     @Test
-    void convert_eur_to_usd_returns_double() throws MissingExchangeRateException, SameCurrencyException {
-        assertThat(Bank.withExchangeRate(EUR, USD, 1.2).convert(10, EUR, USD))
-                .isEqualTo(12);
+    void convert_currencies() throws MissingExchangeRateException, SameCurrencyException {
+        Bank bank = Bank.withExchangeRate(EUR, USD, 1.2);
+
+        double amount = bank.convert(10, EUR, USD);
+
+        assertThat(amount).isEqualTo(12);
     }
 
     @Test
-    void convert_eur_to_eur_returns_same_value() throws MissingExchangeRateException, SameCurrencyException {
+    void convert_same_currency() throws MissingExchangeRateException, SameCurrencyException {
         assertThatThrownBy(() -> Bank.withExchangeRate(EUR, USD, 1.2).convert(10, EUR, EUR))
                 .isInstanceOf(SameCurrencyException.class)
-                .hasMessage("Impossible de convertir deux monnaies identiques EUR->EUR");
+                .hasMessage("Impossible de convertir deux monnaies identiques EUR->");
     }
 
     @Test

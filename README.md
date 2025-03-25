@@ -1,4 +1,9 @@
 # Xtrem Craft workshop
+Elouan Le Merle
+Aymeric Moreira
+Mathieu Dubernet
+Kamila Medellel
+
 
 This workshop is based on the [Xtrem TDD workshop](https://github.com/les-tontons-crafters/xtrem-tdd-money-kata), 
 by [Yoan Thirion](https://github.com/ythirion) and [Guillaume Faas](https://github.com/Tr00d)  

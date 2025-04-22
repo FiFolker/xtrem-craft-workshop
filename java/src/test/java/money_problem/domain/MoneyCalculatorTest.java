@@ -1,6 +1,5 @@
 package money_problem.domain;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static money_problem.domain.Currency.*;
@@ -10,7 +9,7 @@ class MoneyCalculatorTest {
     @Test
     void shouldAddInUsd() {
         assertThat(MoneyCalculator.add(5, USD, 10))
-                .isNotNull();
+                .isEqualTo(15);
     }
 
     @Test

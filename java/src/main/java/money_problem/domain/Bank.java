@@ -11,11 +11,9 @@ public final class Bank {
         this.EXCHANGE_RATES = exchangeRates;
     }
 
-    public static Bank withExchangeRate(Currency start, Currency end, double rate)throws SameCurrencyException {
+    public static Bank withExchangeRate(Currency start, Currency end, double rate) {
         var bank = new Bank(new HashMap<>());
-        if(start == end){
-            throw new SameCurrencyException(start, end);
-        }
+        
         bank.addExchangeRate(start, end, rate);
 
         return bank;
@@ -25,11 +23,10 @@ public final class Bank {
         EXCHANGE_RATES.put(start + EXCHANGE_SYMBOL + end, rate);
     }
 
-    public double convert(double amount, Currency from, Currency to) throws MissingExchangeRateException, SameCurrencyException{
+    public double convert(double amount, Currency from, Currency to) throws MissingExchangeRateException{
         if(from == to){
-            throw new SameCurrencyException(from, to);
-        }
-        else if (!(EXCHANGE_RATES.containsKey(from + EXCHANGE_SYMBOL + to))) {
+            return amount;
+        } else if (!(EXCHANGE_RATES.containsKey(from + EXCHANGE_SYMBOL + to))) {
             throw new MissingExchangeRateException(from, to);
         }
         return from == to

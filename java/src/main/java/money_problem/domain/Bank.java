@@ -29,9 +29,7 @@ public final class Bank {
         } else if (!(EXCHANGE_RATES.containsKey(from + EXCHANGE_SYMBOL + to))) {
             throw new MissingExchangeRateException(from, to);
         }
-        return from == to
-                ? amount
-                : amount * EXCHANGE_RATES.get(from + EXCHANGE_SYMBOL + to);
+        return amount * EXCHANGE_RATES.get(from + EXCHANGE_SYMBOL + to);
     }
 
 }

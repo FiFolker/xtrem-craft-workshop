@@ -23,7 +23,7 @@ class BankTest {
     void convert_same_currency() throws MissingExchangeRateException, SameCurrencyException {
         assertThatThrownBy(() -> Bank.withExchangeRate(EUR, USD, 1.2).convert(10, EUR, EUR))
                 .isInstanceOf(SameCurrencyException.class)
-                .hasMessage("Impossible de convertir deux monnaies identiques EUR->");
+                .hasMessage("Impossible de convertir deux monnaies identiques %s->%s", EUR, EUR);
     }
 
     @Test

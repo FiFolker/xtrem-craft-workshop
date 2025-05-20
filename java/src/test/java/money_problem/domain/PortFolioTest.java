@@ -1,7 +1,7 @@
 package money_problem.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,20 +25,18 @@ class PortFolio{
 
     }
 
-    double evaluate(Bank bank, Currency currency){
+    double evaluate(Bank bank, Currency currency) throws MissingExchangeRateException{
         // Implementation for evaluating the portfolio
 
         double totalAmountConverted = 0;
 
         for (Map.Entry<Currency, Double> entry : this.amounts.entrySet()) {
-            try {
+                System.out.println(entry.getValue().toString() + " " +  entry.getKey().toString() + " " + currency.toString());
                 double newAmount = bank.convert(entry.getValue(), entry.getKey(), currency);
+                System.out.println(newAmount);
                 totalAmountConverted += newAmount;
-            } catch (MissingExchangeRateException e) {
-                e.printStackTrace();
-            }
         }
-
+        
         return totalAmountConverted;
     }
 }
@@ -46,7 +44,7 @@ class PortFolio{
 public class PortFolioTest {
 
     @Test
-    void shouldAddOneValueInSameCurency() {
+    void shouldAddOneValueInSameCurency() throws MissingExchangeRateException{
         
         // Arange
         Bank bank = Bank.withExchangeRate(Currency.EUR, Currency.USD, 1.2);
@@ -62,7 +60,7 @@ public class PortFolioTest {
     }
 
     @Test
-    void shouldAddInSameCurency() {
+    void shouldAddInSameCurency() throws MissingExchangeRateException{
         
         // Arange
         Bank bank = Bank.withExchangeRate(Currency.EUR, Currency.USD, 1.2);
@@ -80,7 +78,7 @@ public class PortFolioTest {
 
     @Test
     // add 5 usd + 10 EUR qhould be 17 USD
-    void shouldAddInUsd() {
+    void shouldAddInUsd() throws MissingExchangeRateException{
         PortFolio portfolio = new PortFolio();
         portfolio.add(5, Currency.USD);
         portfolio.add(10, Currency.EUR);
@@ -94,17 +92,14 @@ public class PortFolioTest {
     }
 
     @Test
-    void shouldThrowErrorWhenNotExistingCurrency(){
+    void shouldThrowErrorWhenNotExistingCurrency() throws MissingExchangeRateException{
         //Arrange
         Bank bank = Bank.withExchangeRate(Currency.EUR, Currency.USD, 1.2);
 
         PortFolio portfolio = new PortFolio();
         portfolio.add(5, Currency.KRW);
 
-        //Act
-        double evaluation = portfolio.evaluate(bank, Currency.KRW);
-
         //Assert
-        assertThatThrownBy(() -> portfolio.evaluate(bank, Currency.KRW)).isInstanceOf(MissingExchangeRateException.class);
+        assertThatThrownBy(() -> portfolio.evaluate(bank, Currency.USD)).isInstanceOf(MissingExchangeRateException.class);
     }
 }

@@ -46,3 +46,14 @@ jobs:
         with:
           name: pitest-report
           path: java/target/pit-reports
+
+  libyear:
+    runs-on: ubuntu-latest
+    needs: mutation-tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/java-setup
+
+      - name: Run libyear for dependencies
+        run: mvn io.github.mfoo:libyear-maven-plugin:analyze
+        working-directory: java

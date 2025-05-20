@@ -1,6 +1,7 @@
 package money_problem.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static money_problem.domain.Currency.USD;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashMap;
@@ -14,7 +15,7 @@ class PortFolio{
     private HashMap<Currency, Double> amounts = new HashMap<>();
 
     private Money money;
-    private HashMap<Currency, double> moneys = new HashMap<>();
+    private HashMap<Currency, Double> moneys = new HashMap<>();
 
     void add(double amount, Currency currency) {
         // Implementation for adding money to the portfolio
@@ -42,13 +43,13 @@ class PortFolio{
     }
 
     Money newEvaluate(Bank bank, Currency currency) throws MissingExchangeRateException{
-        double totalAmountConverted = 0;
+        Money totalAmountConverted = new Money(0, currency);
 
         for (Map.Entry<Currency, Double> entry : this.moneys.entrySet()) {
                 System.out.println(entry.getValue().toString() + " " +  entry.getKey().toString() + " " + currency.toString());
                 Money newAmount = bank.convert(new Money(entry.getValue(), entry.getKey()), currency);
                 System.out.println(newAmount.amount());
-                totalAmountConverted += newAmount.amount();
+                totalAmountConverted = totalAmountConverted.add(newAmount);
         }
         
         return totalAmountConverted;
@@ -67,10 +68,10 @@ public class PortFolioTest {
         portfolio.add(5, Currency.USD);
         
         // Act
-        double evaluation = portfolio.newEvaluate(bank, Currency.USD);
+        Money evaluation = portfolio.newEvaluate(bank, Currency.USD);
         
         //Assert
-        assertEquals(evaluation, 5);
+        assertEquals(evaluation, new Money(5, USD));
     }
 
     @Test
@@ -84,7 +85,7 @@ public class PortFolioTest {
         portfolio.add(10, Currency.USD);
         
         // Act
-        double evaluation = portfolio.newEvaluate(bank, Currency.USD);
+        Money evaluation = portfolio.newEvaluate(bank, Currency.USD);
         
         //Assert
         assertEquals(evaluation, 15);
@@ -100,9 +101,9 @@ public class PortFolioTest {
         Bank bank = Bank.withExchangeRate(Currency.EUR, Currency.USD, 1.2);
 
 
-        double evaluation = portfolio.newEvaluate(bank, Currency.USD);
+        Money evaluation = portfolio.newEvaluate(bank, Currency.USD);
 
-        assertEquals(evaluation, 17);       
+        assertEquals(evaluation, new Money(17, USD));       
     }
 
     @Test

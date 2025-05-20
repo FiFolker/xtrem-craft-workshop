@@ -28,9 +28,6 @@
                 <version>1.19.0</version>
                 <configuration>
                     <testPlugin>junit5</testPlugin>
-                    <targetClasses>
-                        <param>money_problem.domain.*</param> 
-                    </targetClasses>
                 </configuration>
             </plugin>
         </plugins>

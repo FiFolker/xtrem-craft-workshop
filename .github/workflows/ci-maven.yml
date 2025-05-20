@@ -38,7 +38,7 @@ jobs:
       - uses: ./.github/actions/java-setup
 
       - name: Run PIT Mutation Testing
-        run: mvn org.pitest:pitest-maven:mutationCoverage
+        run: mvn org.pitest:pitest-maven:mutationCoverage -X
         working-directory: java
 
       - name: Upload mutation test report

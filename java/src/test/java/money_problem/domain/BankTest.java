@@ -4,6 +4,7 @@ import static money_problem.domain.Currency.EUR;
 import static money_problem.domain.Currency.KRW;
 import static money_problem.domain.Currency.USD;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 import org.junit.jupiter.api.Test;
@@ -50,21 +51,13 @@ class BankTest {
     @Test
     void convert_throws_exception_on_missing_exchange_rate() throws MissingExchangeRateException {
         Bank bank = Bank.withExchangeRate(EUR, USD, 1.2);
-        try {
-            bank.convert(10, EUR, KRW);
-        } catch (MissingExchangeRateException e) {
-            assertThat(e.getMessage()).isEqualTo("EUR->KRW");
-        }
+        assertThatThrownBy(() -> bank.convert(10, EUR, KRW)).hasMessage("EUR->KRW");
     }
 
     @Test
     void NewConvert_throws_exception_on_missing_exchange_rate() throws MissingExchangeRateException {
         Bank bank = Bank.withExchangeRate(EUR, USD, 1.2);
-        try {
-            bank.convert(new Money(10, EUR), KRW);
-        } catch (MissingExchangeRateException e) {
-            assertThat(e.getMessage()).isEqualTo("EUR->KRW");
-        }
+        assertThatThrownBy(() -> bank.convert(new Money(10, EUR), KRW)).hasMessage("EUR->KRW");
     }
 
     @Test

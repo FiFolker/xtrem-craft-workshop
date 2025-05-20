@@ -29,7 +29,7 @@
                 <configuration>
                     <testPlugin>junit5</testPlugin>
                     <targetClasses>
-                        <param>money_problem.*</param> 
+                        <param>money_problem.domain.*</param> 
                     </targetClasses>
                 </configuration>
             </plugin>

@@ -1,6 +1,7 @@
 package money_problem.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThatThrownBy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,10 +32,7 @@ class PortFolio{
 
         for (Map.Entry<Currency, Double> entry : this.amounts.entrySet()) {
             try {
-                
-                System.out.println(entry.getValue().toString() + " " +  entry.getKey().toString() + " " + currency.toString());
                 double newAmount = bank.convert(entry.getValue(), entry.getKey(), currency);
-                System.out.println(newAmount);
                 totalAmountConverted += newAmount;
             } catch (MissingExchangeRateException e) {
                 e.printStackTrace();
@@ -93,5 +91,20 @@ public class PortFolioTest {
         double evaluation = portfolio.evaluate(bank, Currency.USD);
 
         assertEquals(evaluation, 17);       
+    }
+
+    @Test
+    void shouldThrowErrorWhenNotExistingCurrency(){
+        //Arrange
+        Bank bank = Bank.withExchangeRate(Currency.EUR, Currency.USD, 1.2);
+
+        PortFolio portfolio = new PortFolio();
+        portfolio.add(5, Currency.KRW);
+
+        //Act
+        double evaluation = portfolio.evaluate(bank, Currency.KRW);
+
+        //Assert
+        assertThatThrownBy(() -> portfolio.evaluate(bank, Currency.KRW)).isInstanceOf(MissingExchangeRateException.class);
     }
 }

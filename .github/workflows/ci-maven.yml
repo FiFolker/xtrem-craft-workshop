@@ -10,6 +10,7 @@ jobs:
   unit-tests:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/java-setup
 
       - name: Build with Maven
@@ -24,6 +25,7 @@ jobs:
     if: github.ref == 'refs/heads/master' || github.event_name == 'pull_request'
     continue-on-error: true
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/java-setup
 
       - name: Run PIT Mutation Testing

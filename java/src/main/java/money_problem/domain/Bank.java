@@ -32,4 +32,8 @@ public final class Bank {
         return amount * EXCHANGE_RATES.get(from + EXCHANGE_SYMBOL + to);
     }
 
+    public Money convert(Money money, Currency to) throws MissingExchangeRateException{
+        return new Money(this.convert(money.amount(), money.currency(), to), to);
+    }
+
 }

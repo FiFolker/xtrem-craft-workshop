@@ -1,8 +1,8 @@
 package money_problem.domain;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static money_problem.domain.Currency.USD;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
@@ -23,11 +23,11 @@ public class PortFolioTest {
         
         // Act
         // Money evaluation = portfolio.evaluate(bank, Currency.USD);
-        Money evaluation2 = portfolio.evaluate(bank, Currency.USD);
+        Money evaluation = portfolio.evaluate(bank, Currency.USD);
         
         //Assert
         // assertEquals(evaluation, new Money(5, USD));
-        assertEquals(evaluation2, new Money(5, USD));
+        assertEquals(evaluation, new Money(5, USD));
     }
 
     @Test
@@ -43,11 +43,11 @@ public class PortFolioTest {
         
         // Act
         // Money evaluation = portfolio.evaluate(bank, Currency.USD);
-        Money evaluation2 = portfolio.evaluate(bank, Currency.USD);
+        Money evaluation = portfolio.evaluate(bank, Currency.USD);
         
         //Assert
         // assertEquals(evaluation, new Money(15, USD));
-        assertEquals(evaluation2, new Money(15, USD));
+        assertEquals(evaluation, new Money(15, USD));
     }
 
     @Test
@@ -63,10 +63,10 @@ public class PortFolioTest {
 
 
         // Money evaluation = portfolio.evaluate(bank, Currency.USD);
-        Money evaluation2 = portfolio.evaluate(bank, Currency.USD);
+        Money evaluation = portfolio.evaluate(bank, Currency.USD);
 
         // assertEquals(evaluation, new Money(17, USD));
-        assertEquals(evaluation2, new Money(17, USD));
+        assertEquals(evaluation, new Money(17, USD));
     }
 
     @Test

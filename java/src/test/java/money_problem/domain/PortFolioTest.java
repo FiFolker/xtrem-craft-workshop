@@ -14,7 +14,7 @@ class PortFolio{
     private HashMap<Currency, Double> amounts = new HashMap<>();
 
     private Money money;
-    private HashMap<Currency, double> moneys = new HashMap<>();
+    private HashMap<Currency, Double> moneys = new HashMap<>();
 
     void add(double amount, Currency currency) {
         // Implementation for adding money to the portfolio

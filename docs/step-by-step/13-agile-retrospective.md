@@ -8,9 +8,9 @@ Nous avons appris à développer en mob programming, refactorer efficacement les
 ## Surpris
 
 > Qu'est-ce qui vous a le plus surpris, a changé vos habitudes ?
-Le mob programming et l'utilisation de github action.
+Le mob programming, les roles et le fonctionnement et l'utilisation de github action.
 
 ## Lundi
 
 > Que mettrez-vous en application à partir de la semaine prochaine ? 
-Le refactoring et la couverture de test Maven sur github
+Le refactoring et la couverture de test Maven sur github.

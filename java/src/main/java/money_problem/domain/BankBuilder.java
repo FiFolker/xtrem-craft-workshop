@@ -26,7 +26,7 @@ public class BankBuilder{
         Bank bank = Bank.withExchangeRate(this.pivotCurrency, currency, this.exchangeRates.get(currency));
         for (Map.Entry<Currency, Double> entry : exchangeRates.entrySet()) {
             if(entry.getKey() != currency){
-                bank.addExchangeRate(this.pivotCurrency, entry.getKey(), entry.getValue());
+                bank.addExchangeRate(entry.getKey(), entry.getValue());
             }
         }
         return bank;

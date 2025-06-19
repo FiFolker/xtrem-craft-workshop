@@ -90,5 +90,36 @@ class BankTest {
 
         assertThat(amount2.amount()).isEqualTo(13);
     }
-    
+
+    @Test
+    void convert_with_round_tripping_and_simple_rate() throws MissingExchangeRateException {
+        Bank bank = Bank.withExchangeRate(EUR, USD, 2);
+
+        double amount = bank.convert(10, EUR, USD);
+        assertThat(amount).isBetween((double) 20 - (2 * 2 / 100), (double) 20 + (2 * 2 / 100));
+
+        amount = bank.convert(20, USD, EUR);
+        assertThat(amount).isBetween((double) 10 - (2 * 2 / 100), (double) 10 + (2 * 2 / 100));
+    }
+
+    @Test
+    void convert_with_round_tripping_and_complex_rate() throws MissingExchangeRateException { 
+        Bank bank = Bank.withExchangeRate(EUR, KRW, 1344);
+
+        double amount = bank.convert(100, EUR, KRW);
+        assertThat(amount).isBetween((double) 134400 - (2 * 1344 / 100), (double) 134400 + (2 * 1344 / 100));
+
+        amount = bank.convert(134400, KRW, EUR);
+        assertThat(amount).isBetween((double) 100 - (2 * 1344 / 100), (double) 100 + (2 * 1344 / 100));
+    }
+
+    @Test
+    void test_round_when_convert() throws MissingExchangeRateException { 
+        Bank bank = Bank.withExchangeRate(EUR, USD, 1.5);
+
+        double amount = bank.convert(123.93, EUR, USD);
+        assertThat(amount).isBetween(185.895 - (2 * 1.5 / 100), 185.895 + (2 * 1.5 / 100));
+        assertThat(amount).isEqualTo(185.88);
+    }
+
 }

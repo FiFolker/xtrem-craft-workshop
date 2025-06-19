@@ -1,6 +1,9 @@
 package money_problem.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Disabled;
+
 import static money_problem.domain.Currency.USD;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -81,5 +84,20 @@ public class PortFolioTest {
         //Assert
         // assertThatThrownBy(() -> portfolio.evaluate(bank, Currency.USD)).isInstanceOf(MissingExchangeRateException.class);
         assertThatThrownBy(() -> portfolio.evaluate(bank, Currency.USD)).isInstanceOf(MissingExchangeRateException.class);
+    }
+
+    @Test
+    @Disabled
+    void shouldAddAllCurrency() throws MissingExchangeRateException{
+        PortFolio portfolio = new PortFolio();
+        portfolio.add(5, Currency.USD);
+        portfolio.add(10, Currency.EUR);
+        portfolio.add(1000, Currency.KRW);
+
+        Bank bank = BankBuilder.abank().withPivot(Currency.EUR).withExchangeRate(1.5, Currency.USD).withExchangeRate(1344, Currency.KRW).build();
+
+        Money evaluation = portfolio.evaluate(bank, Currency.EUR);
+
+        assertEquals(evaluation, new Money(18.23, Currency.EUR));
     }
 }
